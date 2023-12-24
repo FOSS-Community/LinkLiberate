@@ -1,0 +1,15 @@
+[project]
+name = "LinkLiberate"
+version = "0.1.0"
+description = "A libre url shortner"
+authors = [
+    {name = "Kanishk Pachauri", email = "itskanishkp.py@gmail.com"},
+]
+dependencies = []
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+package-type = "application"
