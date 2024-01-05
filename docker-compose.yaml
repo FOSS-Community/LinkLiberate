@@ -1,0 +1,8 @@
+services:
+  myapp:
+    build:
+      context: .
+      target: builder
+    ports:
+      - "8080:8080"
+    command: ["pdm", "run", "start"]

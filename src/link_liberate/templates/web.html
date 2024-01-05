@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Web post | LL{% endblock %}
+
+{% block head %}
+<meta charset="UTF-8" />
+<meta name="og:title" content="Web post | LL" />
+<meta name="og:site_name" content="LinkLiberate" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+    name="og:description"
+    content="Web form for posting links to the LinkLiberate database."
+/>
+<meta name="og:type" content="website" />
+<meta name="og:url" content="https://ll.fosscu.org" />
+<meta name="og:locale" content="en_US" />
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>LinkLiberate</h1>
+    <div class="form-container">
+        <form method="post" action="/web">
+            <input type="text" name="link" class="link-input" placeholder="Enter your link...">
+            <button type="submit" class="submit-button">Shorten</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
