@@ -1,12 +1,10 @@
 # 🔗LinkLiberate🪽
 
-<div style="display: flex; align-items: center;">
-  <img width="320" height="320" src="artwork/logo.png" alt="Material Bread logo" style="margin-right:20px;">
-  <div>
-    <p>
-      LinkLiberate is a URL shortener that is free and open source. It is built with Python, powered by FastAPI.
-    </p>
-    <a href="https://kuma.fosscu.org/status/pastepy" target="_blank"><img src="https://badgen.net/badge/status/LinkLiberate/red?icon=lgtm" alt=""></a>
+<div>
+<p>
+  LinkLiberate is a URL shortener that is free and open source. It is built with Python, powered by FastAPI.
+</p>
+<a href="https://kuma.fosscu.org/status/pastepy" target="_blank"><img src="https://badgen.net/badge/status/LinkLiberate/red?icon=lgtm" alt=""></a>
 
   ![Version](https://img.shields.io/badge/Version-1.0-brightgreen.svg)
   ![Code Coverage](https://img.shields.io/codecov/c/github/FOSS-Community/LinkLiberate)
@@ -19,8 +17,14 @@
   ![Contributors](https://img.shields.io/github/contributors/FOSS-Community/LinkLiberate)
   ![Repo Size](https://img.shields.io/github/repo-size/FOSS-Community/LinkLiberate)
   ![Code Size](https://img.shields.io/github/languages/code-size/FOSS-Community/LinkLiberate)
-  </div>
+  
 </div>
+
+<p align="center">
+  <img width="320" height="320" src="artwork/logo.png" alt="Material Bread logo" style="margin-right:20px;">
+</p>
+
+
 <hr>
 
 # 🤔 Pre-requisites
