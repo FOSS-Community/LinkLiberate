@@ -1,41 +1,47 @@
 [project]
 name = "LinkLiberate"
 version = "0.1.0"
-description = "A libre url shortner"
+description = "Default template for PDM package"
 authors = [
-    {name = "Kanishk Pachauri", email = "itskanishkp.py@gmail.com"},
-    {name = "Abdul Samad Ansari", email = "asamadans@gmail.com"},
+    {name = "Kanish Pachauri", email = "itskanishkp.py@gmail.com"},
+    {name = "Sam", email = "asamadans@gmail.com"},
 ]
 dependencies = [
+    "black==23.12.1",
     "fastapi[all]>=0.108.0",
-    "jinja2>=3.1.2",
-    "slowapi>=0.1.8",
+    "Jinja2==3.1.2",
+    "slowapi==0.1.8",
+    "uvicorn>=0.25.0",
+    "LinkLiberate @ file:///${PROJECT_ROOT}/",
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.11.6"
 readme = "README.md"
 license = {text = "MIT"}
 
-
 [tool.pdm.scripts]
-start = "uvicorn src.paste.main:app --host 0.0.0.0 --port 8080 --workers 4"
+start = "uvicorn src.link_liberate.main:app --host 0.0.0.0 --port 8080 --workers 4"
 test = "pytest"
 mypy = "mypy src/link_liberate"
+lint = "pre-commit run --all-files"
+format = "black src/LinkLiberate"
+
+[tool.pdm]
+package-type = "application"
 
 [tool.pdm.dev-dependencies]
-test = [
+tests = [
     "pytest>=7.4.3",
     "requests>=2.31.0",
 ]
-lint = [
-    "black>=23.12.1",
-]
+
 hooks = [
     "pre-commit>=3.6.0",
 ]
+
 typing = [
     "mypy>=1.8.0",
 ]
 
-[tool.ruff]
-line-length = 160
-exclude = ["data/*", ".git"]
+style = [
+    "black>=23.12.1",
+]

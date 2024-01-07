@@ -17,7 +17,7 @@
   ![Contributors](https://img.shields.io/github/contributors/FOSS-Community/LinkLiberate)
   ![Repo Size](https://img.shields.io/github/repo-size/FOSS-Community/LinkLiberate)
   ![Code Size](https://img.shields.io/github/languages/code-size/FOSS-Community/LinkLiberate)
-  
+
 </div>
 
 <p align="center">
@@ -130,7 +130,6 @@ pyenv install 3.11.6
   ```bash
   pdm run start
   ```
-  - You can also use `pdm run dev` to start the dev server.
 
 ## Setting Up and Testing the Project
 
