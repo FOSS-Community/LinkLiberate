@@ -17,6 +17,7 @@
   ![Contributors](https://img.shields.io/github/contributors/FOSS-Community/LinkLiberate)
   ![Repo Size](https://img.shields.io/github/repo-size/FOSS-Community/LinkLiberate)
   ![Code Size](https://img.shields.io/github/languages/code-size/FOSS-Community/LinkLiberate)
+  ![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)
 
 </div>
 
