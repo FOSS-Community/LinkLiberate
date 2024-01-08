@@ -54,7 +54,7 @@ async def index_page(request: Request) -> Response:
 
 @app.get("/liberate", response_class=HTMLResponse)
 async def web(request: Request) -> Response:
-    return templates.TemplateResponse("web.html", {"request": request})
+    return templates.TemplateResponse("liberate.html", {"request": request})
 
 
 @app.post("/liberate", response_class=PlainTextResponse)

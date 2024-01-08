@@ -23,7 +23,7 @@ start = "uvicorn src.link_liberate.main:app --host 0.0.0.0 --port 8080 --workers
 test = "pytest"
 mypy = "mypy src/link_liberate"
 lint = "pre-commit run --all-files"
-format = "black src/LinkLiberate"
+format = "black src/link_liberate"
 
 [tool.pdm]
 package-type = "application"
