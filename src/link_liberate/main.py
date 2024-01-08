@@ -71,7 +71,7 @@ async def web_post(
             uuid = generate_uuid()
         path: str = f"data/{uuid}"
         with open(path, "w") as f:
-            f.write(link)
+            f.write(make_proper_url(link))
             large_uuid_storage.append(uuid)
     except Exception as e:
         print(e)
@@ -82,34 +82,12 @@ async def web_post(
     return PlainTextResponse(f"{BASE_URL}/{uuid}", status_code=status.HTTP_201_CREATED)
 
 
-@app.post("/")
-@limiter.limit("100/minute")
-async def post_as_a_file(
-    request: Request, content: str = Form(...)
-) -> PlainTextResponse:
-    try:
-        uuid: str = generate_uuid()
-        if uuid in large_uuid_storage:
-            uuid = generate_uuid()
-        path: str = f"data/{uuid}"
-        val: str = "/".join(path.split("/")[1:])
-        with open(path, "wb") as f:
-            f.write(content.encode())
-            large_uuid_storage.append(uuid)
-    except Exception as e:
-        raise HTTPException(
-            detail=f"There was an error uploading the file: {e}",
-            status_code=status.HTTP_403_FORBIDDEN,
-        )
-    return PlainTextResponse(val, status_code=status.HTTP_201_CREATED)
-
-
 @app.get("/{uuid}", response_class=RedirectResponse)
 async def get_link(request: Request, uuid: str) -> RedirectResponse:
     path: str = f"data/{uuid}"
     try:
         with open(path, "r") as f:
-            original_link: str = make_proper_url(f.read())
+            original_link: str = f.read()
             return RedirectResponse(original_link)
     except Exception as e:
         raise HTTPException(
