@@ -14,6 +14,7 @@ dependencies = [
     "uvicorn>=0.25.0",
     "LinkLiberate @ file:///${PROJECT_ROOT}/",
     "logger>=1.4",
+    "aioredis>=2.0.1",
 ]
 requires-python = ">=3.11.6"
 readme = "README.md"
