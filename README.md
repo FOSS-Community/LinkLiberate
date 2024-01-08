@@ -4,7 +4,7 @@
 <p>
   LinkLiberate is a URL shortener that is free and open source. It is built with Python, powered by FastAPI.
 </p>
-<a href="https://kuma.fosscu.org/status/pastepy" target="_blank"><img src="https://badgen.net/badge/status/LinkLiberate/red?icon=lgtm" alt=""></a>
+<a href="https://kuma.fosscu.org/status/LinkLiberate" target="_blank"><img src="https://badgen.net/badge/status/Under Development/red?icon=lgtm" alt=""></a>
 
   ![Version](https://img.shields.io/badge/Version-1.0-brightgreen.svg)
   ![Code Coverage](https://img.shields.io/codecov/c/github/FOSS-Community/LinkLiberate)
