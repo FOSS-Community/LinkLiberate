@@ -13,13 +13,14 @@ dependencies = [
     "slowapi==0.1.8",
     "uvicorn>=0.25.0",
     "LinkLiberate @ file:///${PROJECT_ROOT}/",
+    "logger>=1.4",
 ]
 requires-python = ">=3.11.6"
 readme = "README.md"
 license = {text = "MIT"}
 
 [tool.pdm.scripts]
-start = "uvicorn src.link_liberate.main:app --host 0.0.0.0 --port 8080 --workers 4"
+start = "uvicorn src.link_liberate.main:app --host 0.0.0.0 --port 8080 --workers 1 --reload"
 test = "pytest"
 mypy = "mypy src/link_liberate"
 lint = "pre-commit run --all-files"

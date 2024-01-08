@@ -5,7 +5,7 @@
 groups = ["default", "hooks", "style", "tests", "typing"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:ed693284d9878b939601dbafe4f6e04e00d0966b27a67cd5845999e658ae54aa"
+content_hash = "sha256:5f4ca5f71ff5b15cf906262fa85e4f82eb4c259cda57be3a1197127a233f6141"
 
 [[package]]
 name = "annotated-types"
@@ -419,6 +419,15 @@ dependencies = [
     "fastapi[all]>=0.108.0",
     "slowapi==0.1.8",
     "uvicorn>=0.25.0",
+]
+
+[[package]]
+name = "logger"
+version = "1.4"
+summary = "Python logging helper"
+groups = ["default"]
+files = [
+    {file = "logger-1.4.tar.gz", hash = "sha256:4ecac57133c6376fa215f0fe6b4dc4d60e4d1ad8be005cab4e8a702df682f8b3"},
 ]
 
 [[package]]

@@ -12,3 +12,10 @@ def generate_uuid() -> str:
     random_code: str = "".join(random.choice(characters) for _ in range(4))
 
     return random_code
+
+
+def make_proper_url(url: str) -> str:
+    if url.startswith("http://") or url.startswith("https://"):
+        return url
+    else:
+        return f"https://{url}"
