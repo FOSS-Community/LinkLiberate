@@ -65,8 +65,9 @@ async def web_post(
 ) -> PlainTextResponse:
     try:
         link: str = make_proper_url(content)
-        print(link)
         uuid: str = generate_uuid()
+        if redis.exists(uuid):
+            uuid = generate_uuid()
         redis.set(uuid, link)
     except Exception as e:
         raise HTTPException(
