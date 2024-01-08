@@ -12,9 +12,8 @@ dependencies = [
     "Jinja2==3.1.2",
     "slowapi==0.1.8",
     "uvicorn>=0.25.0",
-    "LinkLiberate @ file:///${PROJECT_ROOT}/",
     "logger>=1.4",
-    "aioredis>=2.0.1",
+    "redis[hiredis]>=5.0.1",
 ]
 requires-python = ">=3.11.6"
 readme = "README.md"

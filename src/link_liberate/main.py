@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import List
-import logger
+from redis import Redis
 
 from fastapi import (
     FastAPI,
@@ -45,7 +45,7 @@ app.add_middleware(
 
 templates: Jinja2Templates = Jinja2Templates(directory=str(Path(BASE_DIR, "templates")))
 
-large_uuid_storage: List[str] = []
+redis = Redis(host="localhost", port=6379, db=0)
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -64,17 +64,11 @@ async def web_post(
     request: Request, content: Annotated[str, Form()]
 ) -> PlainTextResponse:
     try:
-        link: str = content
+        link: str = make_proper_url(content)
         print(link)
         uuid: str = generate_uuid()
-        if uuid in large_uuid_storage:
-            uuid = generate_uuid()
-        path: str = f"data/{uuid}"
-        with open(path, "w") as f:
-            f.write(make_proper_url(link))
-            large_uuid_storage.append(uuid)
+        redis.set(uuid, link)
     except Exception as e:
-        print(e)
         raise HTTPException(
             detail=f"There was an error uploading the file: {e}",
             status_code=status.HTTP_403_FORBIDDEN,
@@ -86,9 +80,8 @@ async def web_post(
 async def get_link(request: Request, uuid: str) -> RedirectResponse:
     path: str = f"data/{uuid}"
     try:
-        with open(path, "r") as f:
-            original_link: str = f.read()
-            return RedirectResponse(original_link)
+        link: str = str(redis.get(uuid))[2:-1]
+        return RedirectResponse(url=link, status_code=status.HTTP_301_MOVED_PERMANENTLY)
     except Exception as e:
         raise HTTPException(
             detail=f"404: The Requested Resource is not found: {e}",
