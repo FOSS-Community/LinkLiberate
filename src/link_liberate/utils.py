@@ -9,7 +9,7 @@ def generate_uuid() -> str:
     characters: str = string.ascii_letters + string.digits
 
     # Generate a random 4-character code
-    random_code: str = "".join(random.choice(characters) for _ in range(4))
+    random_code: str = "".join(random.choice(characters) for _ in range(6))
 
     return random_code
 

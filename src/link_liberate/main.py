@@ -45,7 +45,7 @@ app.add_middleware(
 
 templates: Jinja2Templates = Jinja2Templates(directory=str(Path(BASE_DIR, "templates")))
 
-redis = Redis(host="redis", port=6379)
+redis = Redis(host="localhost", port=6379)
 
 
 @app.get("/", response_class=HTMLResponse)
