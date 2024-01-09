@@ -5,7 +5,7 @@
 groups = ["default", "hooks", "style", "tests", "typing"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:80f05ad42f6fdaaf5a407ff3e36cf32482018b97229d7f40ef1da4bef716a734"
+content_hash = "sha256:817ca8d0f4f2f6f8ac947adc7d95734dfc2a1196a72948fa515f579a9a4cc57c"
 
 [[package]]
 name = "annotated-types"
@@ -463,23 +463,6 @@ dependencies = [
 files = [
     {file = "limits-3.7.0-py3-none-any.whl", hash = "sha256:c528817b7fc15f3e86ad091ba3e40231f6430a91b753db864767684cda8a7f2e"},
     {file = "limits-3.7.0.tar.gz", hash = "sha256:124c6a04d2f4b20990fb1de019eec9474d6c1346c70d8fd0561609b86998b64a"},
-]
-
-[[package]]
-name = "linkliberate"
-version = "0.1.0"
-requires_python = ">=3.11.6"
-path = "./."
-summary = "Default template for PDM package"
-groups = ["default"]
-dependencies = [
-    "Jinja2==3.1.2",
-    "LinkLiberate @ file:///${PROJECT_ROOT}/.",
-    "black==23.12.1",
-    "fastapi[all]>=0.108.0",
-    "logger>=1.4",
-    "slowapi==0.1.8",
-    "uvicorn>=0.25.0",
 ]
 
 [[package]]
