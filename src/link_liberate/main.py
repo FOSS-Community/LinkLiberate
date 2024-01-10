@@ -1,6 +1,5 @@
 from pathlib import Path
 from typing import List
-from redis import Redis
 
 from fastapi import (
     FastAPI,
@@ -9,6 +8,7 @@ from fastapi import (
     Response,
     HTTPException,
     status,
+    Depends
 )
 from fastapi.responses import (
     PlainTextResponse,
@@ -21,14 +21,17 @@ from typing import Annotated
 from slowapi.errors import RateLimitExceeded
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
+from sqlalchemy.orm import Session
 
 from .utils import generate_uuid, make_proper_url
+from .models import Base, LiberatedLink
+from .database import engine, get_db
 
 limiter = Limiter(key_func=get_remote_address)
 app: FastAPI = FastAPI(title="link-liberate")
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-
+Base.metadata.create_all(bind=engine)
 origins: List[str] = ["*"]
 
 BASE_URL: str = r"127.0.0.1:8080"
@@ -43,9 +46,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-templates: Jinja2Templates = Jinja2Templates(directory=str(Path(BASE_DIR, "templates")))
-
-redis = Redis(host="localhost", port=6379)
+templates: Jinja2Templates = Jinja2Templates(
+    directory=str(Path(BASE_DIR, "templates")))
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -61,14 +63,17 @@ async def web(request: Request) -> Response:
 @app.post("/liberate", response_class=PlainTextResponse)
 @limiter.limit("100/minute")
 async def web_post(
-    request: Request, content: Annotated[str, Form()]
+    request: Request, content: Annotated[str, Form()], db: Session = Depends(get_db)
 ) -> PlainTextResponse:
     try:
         link: str = make_proper_url(content)
         uuid: str = generate_uuid()
-        if redis.exists(uuid):
+        if db.query(LiberatedLink).filter(LiberatedLink.uuid == uuid).first():
             uuid = generate_uuid()
-        redis.set(uuid, link)
+        new_liberated_link = LiberatedLink(uuid=uuid, link=link)
+        db.add(new_liberated_link)
+        db.commit()
+        db.refresh(new_liberated_link)
     except Exception as e:
         raise HTTPException(
             detail=f"There was an error uploading the file: {e}",
@@ -78,11 +83,12 @@ async def web_post(
 
 
 @app.get("/{uuid}", response_class=RedirectResponse)
-async def get_link(request: Request, uuid: str) -> RedirectResponse:
+async def get_link(request: Request, uuid: str, db: Session = Depends(get_db)) -> RedirectResponse:
     path: str = f"data/{uuid}"
     try:
-        link: str = str(redis.get(uuid))[2:-1]
-        return RedirectResponse(url=link, status_code=status.HTTP_301_MOVED_PERMANENTLY)
+        link = db.query(LiberatedLink).filter(
+            LiberatedLink.uuid == uuid).first()
+        return RedirectResponse(url=link.link, status_code=status.HTTP_301_MOVED_PERMANENTLY)
     except Exception as e:
         raise HTTPException(
             detail=f"404: The Requested Resource is not found: {e}",

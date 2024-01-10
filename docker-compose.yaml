@@ -7,11 +7,5 @@ services:
     ports:
       - "8080:8080"
     command: ["pdm", "run", "start"]
-    depends_on:
-      redis:
-        condition: service_healthy
-
-  redis:
-    image: redis:alpine
-    ports:
-      - "6379:6379"
+    volumes:
+      - "./data/liberate.db:/project/liberate.db"
