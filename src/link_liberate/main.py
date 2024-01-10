@@ -38,8 +38,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-templates: Jinja2Templates = Jinja2Templates(
-    directory=str(Path(BASE_DIR, "templates")))
+templates: Jinja2Templates = Jinja2Templates(directory=str(Path(BASE_DIR, "templates")))
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -66,16 +65,15 @@ async def web_post(
         db.add(new_liberated_link)
         db.commit()
         db.refresh(new_liberated_link)
-        context = {
-            "link": link,
-            "short": f"{BASE_URL}/{uuid}"
-        }
+        context = {"link": link, "short": f"{BASE_URL}/{uuid}"}
     except Exception as e:
         raise HTTPException(
             detail=f"There was an error uploading the file: {e}",
             status_code=status.HTTP_403_FORBIDDEN,
         )
-    return templates.TemplateResponse(request=request, name="showlibrate.html", context=context)
+    return templates.TemplateResponse(
+        request=request, name="showlibrate.html", context=context
+    )
 
 
 @app.get("/{uuid}", response_class=RedirectResponse)
@@ -84,8 +82,7 @@ async def get_link(
 ) -> RedirectResponse:
     path: str = f"data/{uuid}"
     try:
-        link = db.query(LiberatedLink).filter(
-            LiberatedLink.uuid == uuid).first()
+        link = db.query(LiberatedLink).filter(LiberatedLink.uuid == uuid).first()
         return RedirectResponse(
             url=link.link, status_code=status.HTTP_301_MOVED_PERMANENTLY
         )
