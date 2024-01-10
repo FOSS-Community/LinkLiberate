@@ -1,15 +1,7 @@
 from pathlib import Path
 from typing import List
 
-from fastapi import (
-    FastAPI,
-    Form,
-    Request,
-    Response,
-    HTTPException,
-    status,
-    Depends
-)
+from fastapi import FastAPI, Form, Request, Response, HTTPException, status, Depends
 from fastapi.responses import (
     PlainTextResponse,
     HTMLResponse,
@@ -34,7 +26,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 Base.metadata.create_all(bind=engine)
 origins: List[str] = ["*"]
 
-BASE_URL: str = r"127.0.0.1:8080"
+BASE_URL: str = r"http://0.0.0.0:8080"
 
 BASE_DIR: Path = Path(__file__).resolve().parent
 
@@ -60,7 +52,7 @@ async def web(request: Request) -> Response:
     return templates.TemplateResponse("liberate.html", {"request": request})
 
 
-@app.post("/liberate", response_class=PlainTextResponse)
+@app.post("/liberate", response_class=HTMLResponse)
 @limiter.limit("100/minute")
 async def web_post(
     request: Request, content: Annotated[str, Form()], db: Session = Depends(get_db)
@@ -74,21 +66,29 @@ async def web_post(
         db.add(new_liberated_link)
         db.commit()
         db.refresh(new_liberated_link)
+        context = {
+            "link": link,
+            "short": f"{BASE_URL}/{uuid}"
+        }
     except Exception as e:
         raise HTTPException(
             detail=f"There was an error uploading the file: {e}",
             status_code=status.HTTP_403_FORBIDDEN,
         )
-    return PlainTextResponse(f"{BASE_URL}/{uuid}", status_code=status.HTTP_201_CREATED)
+    return templates.TemplateResponse(request=request, name="showlibrate.html", context=context)
 
 
 @app.get("/{uuid}", response_class=RedirectResponse)
-async def get_link(request: Request, uuid: str, db: Session = Depends(get_db)) -> RedirectResponse:
+async def get_link(
+    request: Request, uuid: str, db: Session = Depends(get_db)
+) -> RedirectResponse:
     path: str = f"data/{uuid}"
     try:
         link = db.query(LiberatedLink).filter(
             LiberatedLink.uuid == uuid).first()
-        return RedirectResponse(url=link.link, status_code=status.HTTP_301_MOVED_PERMANENTLY)
+        return RedirectResponse(
+            url=link.link, status_code=status.HTTP_301_MOVED_PERMANENTLY
+        )
     except Exception as e:
         raise HTTPException(
             detail=f"404: The Requested Resource is not found: {e}",
