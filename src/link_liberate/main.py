@@ -14,8 +14,9 @@ from slowapi.errors import RateLimitExceeded
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from sqlalchemy.orm import Session
+from starlette.templating import _TemplateResponse
 
-from .utils import generate_uuid, make_proper_url
+from .utils import generate_uuid, make_proper_url, check_link
 from .models import Base, LiberatedLink
 from .database import engine, get_db
 
@@ -55,9 +56,17 @@ async def web(request: Request) -> Response:
 @limiter.limit("100/minute")
 async def web_post(
     request: Request, content: Annotated[str, Form()], db: Session = Depends(get_db)
-) -> PlainTextResponse:
+) -> _TemplateResponse:
     try:
         link: str = make_proper_url(content)
+        if not check_link(link):
+            return templates.TemplateResponse(
+                request=request,
+                name="error400.html",
+                context={
+                    "error": "The link you provided is not valid. Please try again."
+                },
+            )
         uuid: str = generate_uuid()
         if db.query(LiberatedLink).filter(LiberatedLink.uuid == uuid).first():
             uuid = generate_uuid()

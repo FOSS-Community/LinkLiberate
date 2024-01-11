@@ -15,6 +15,7 @@ dependencies = [
     "logger>=1.4",
     "SQLAlchemy>=2.0.25",
     "psycopg2-binary>=2.9.9",
+    "validators>=0.22.0",
 ]
 requires-python = ">=3.11.6"
 readme = "README.md"

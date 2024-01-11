@@ -1,6 +1,7 @@
 import random
 import string
-import os
+import validators
+
 from pathlib import Path
 
 
@@ -19,3 +20,9 @@ def make_proper_url(url: str) -> str:
         return url
     else:
         return f"https://{url}"
+
+
+def check_link(link: str) -> bool:
+    if validators.url(link):
+        return True
+    return False
