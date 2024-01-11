@@ -54,13 +54,15 @@ async def web(request: Request) -> Response:
 @app.post("/liberate", response_class=HTMLResponse)
 @limiter.limit("100/minute")
 async def web_post(
-    request: Request, content: Annotated[str, Form()], db: Session = Depends(get_db)
+    request: Request, content: Annotated[str, Form()], customString: Annotated[str, Form()] = None, db: Session = Depends(get_db)
 ) -> PlainTextResponse:
     try:
         link: str = make_proper_url(content)
-        uuid: str = generate_uuid()
-        if db.query(LiberatedLink).filter(LiberatedLink.uuid == uuid).first():
-            uuid = generate_uuid()
+        uuid: str = customString
+        if uuid is None:
+            uuid: str = generate_uuid()
+            if db.query(LiberatedLink).filter(LiberatedLink.uuid == uuid).first():
+                uuid = generate_uuid()
         new_liberated_link = LiberatedLink(uuid=uuid, link=link)
         db.add(new_liberated_link)
         db.commit()
