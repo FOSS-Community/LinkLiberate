@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}Show liberate | LL{% endblock %}
+{% block title %}Error 400 | LL{% endblock %}
 
 {% block head %}
 <meta charset="UTF-8" />
-<meta name="og:title" content="Show liberate post | LL" />
+<meta name="og:title" content="Error 400 | LL" />
 <meta name="og:site_name" content="LinkLiberate" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
     name="og:description"
-    content="Web form for posting links to the LinkLiberate database."
+    content="A simple link shortener that doesn't track you."
 />
 <meta name="og:type" content="website" />
 <meta name="og:url" content="https://ll.fosscu.org" />
@@ -17,11 +17,9 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>🔗LinkLiberate🪽</h1>
-    <div class="form-container">
-        <p>Link: </p><a href="{{ link }}">{{ link }}</a>
-        <p>Short: </p><a href="{{ short }}">{{ short }}</a>
+    <div class="container" align="center">
+        <h1>🔗LinkLiberate🪽</h1>
+        <h2>Error 400 | Bad Request</h2>
+        <p>{{ error }}</p>
     </div>
-</div>
 {% endblock %}
