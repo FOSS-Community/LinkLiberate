@@ -7,6 +7,7 @@ from fastapi.responses import (
     HTMLResponse,
     RedirectResponse,
 )
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
 from typing import Annotated
@@ -30,7 +31,7 @@ origins: List[str] = ["*"]
 BASE_URL: str = r"http://0.0.0.0:8080"
 
 BASE_DIR: Path = Path(__file__).resolve().parent
-
+app.mount("/static", StaticFiles(directory=str(Path(BASE_DIR, "static"))), name="static")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
