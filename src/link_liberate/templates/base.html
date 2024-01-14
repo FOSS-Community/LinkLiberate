@@ -1,66 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>
-            {% block title %}
-            {% endblock %}
-        </title>
-        {% block head %}
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+    <title>
+        {% block title %}
         {% endblock %}
-        <style>
-            body {
-                font-family: 'Arial', sans-serif;
-                background-color: #f5f5f5;
-                margin: 0;
-                padding: 0;
-            }
+    </title>
+    {% block head %}
+    {% endblock %}
+</head>
 
-            .container {
-                max-width: 600px;
-                align-content: center;
-                margin: 50px auto;
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
+<body>
+    {% block body %}
+    {% endblock %}
+</body>
 
-            h1 {
-                text-align: center;
-                color: #333;
-            }
-
-            .form-container {
-                text-align: center;
-            }
-
-            .link-input {
-                width: 100%;
-                padding: 10px;
-                margin: 10px 0;
-                box-sizing: border-box;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-            }
-
-            .submit-button {
-                background-color: #4CAF50;
-                color: #fff;
-                padding: 12px 20px;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 16px;
-            }
-
-            .submit-button:hover {
-                background-color: #45a049;
-            }
-        </style>
-    </head>
-    <body>
-        {% block body %}
-        {% endblock %}
-    </body>
 </html>
