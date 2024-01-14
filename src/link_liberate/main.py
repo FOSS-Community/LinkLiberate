@@ -31,7 +31,7 @@ origins: List[str] = ["*"]
 BASE_URL: str = r"http://0.0.0.0:8080"
 
 BASE_DIR: Path = Path(__file__).resolve().parent
-app.mount("/static", StaticFiles(directory=str(Path(BASE_DIR, "static"))), name="static")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -41,6 +41,7 @@ app.add_middleware(
 )
 
 templates: Jinja2Templates = Jinja2Templates(directory=str(Path(BASE_DIR, "templates")))
+app.mount("/static", StaticFiles(directory=str(Path(BASE_DIR, "static"))), name="static")
 
 
 @app.get("/", response_class=HTMLResponse)
