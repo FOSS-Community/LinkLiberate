@@ -28,7 +28,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 Base.metadata.create_all(bind=engine)
 origins: List[str] = ["*"]
 
-BASE_URL: str = r"http://0.0.0.0:8080"
+BASE_URL: str = r"http://ll.fosscu.org"
 
 BASE_DIR: Path = Path(__file__).resolve().parent
 
