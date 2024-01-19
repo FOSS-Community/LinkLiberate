@@ -3,11 +3,9 @@ from typing import List
 
 from fastapi import FastAPI, Form, Request, Response, HTTPException, status, Depends
 from fastapi.responses import (
-    PlainTextResponse,
     HTMLResponse,
     RedirectResponse,
 )
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
 from typing import Annotated
@@ -40,8 +38,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-templates: Jinja2Templates = Jinja2Templates(directory=str(Path(BASE_DIR, "templates")))
-app.mount("/static", StaticFiles(directory=str(Path(BASE_DIR, "static"))), name="static")
+templates: Jinja2Templates = Jinja2Templates(
+    directory=str(Path(BASE_DIR, "templates")))
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -93,7 +91,8 @@ async def get_link(
 ) -> RedirectResponse:
     path: str = f"data/{uuid}"
     try:
-        link = db.query(LiberatedLink).filter(LiberatedLink.uuid == uuid).first()
+        link = db.query(LiberatedLink).filter(
+            LiberatedLink.uuid == uuid).first()
         return RedirectResponse(
             url=link.link, status_code=status.HTTP_301_MOVED_PERMANENTLY
         )
