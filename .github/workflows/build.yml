@@ -1,0 +1,42 @@
+name: LinkLiberate
+
+on:
+  pull_request:
+    branches:
+    - main
+
+  workflow_dispatch:
+    inputs:
+      message:
+        description: ''
+        required: false
+        default: ''
+
+jobs:
+
+  build-pr:
+    name: Build
+    runs-on: [ubuntu-latest]
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.11.6
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.11.6
+
+    - name: Set build start time
+      run: echo "BUILD_START_TIME=$(date +'%s')" >> $GITHUB_ENV
+      if: ${{ always() }}
+
+    - name: Install dependencies
+      run: |
+        set -o errexit
+        sudo apt-get update -y
+        sudo apt-get install -y bc
+        python -m pip install pdm
+        pdm install
+
+    - name: Run unit tests
+      run: |
+        pdm run pytest tests

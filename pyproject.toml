@@ -35,6 +35,7 @@ package-type = "application"
 [tool.pdm.dev-dependencies]
 tests = [
     "pytest>=7.4.3",
+    "pytest-mock==3.6.1",
     "requests>=2.31.0",
 ]
 
