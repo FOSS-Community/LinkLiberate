@@ -19,7 +19,22 @@
     <a href="/"><h1>🔗LinkLiberate🪽</h1></a>
     <div class="form-container">
         <p>Link: </p><a href="{{ link }}">{{ link }}</a>
-        <p>Short: </p><a href="{{ short }}">{{ short }}</a>
+        <p>Short: </p><a id="shortLink" href="{{ short }}">{{ short }}</a>
+        <button class="copy-button" onclick="copyTextToClipboard('shortLink')">Copy</button>
+
     </div>
 </div>
+<script>
+// Javascript to simply copy text in elementID to user's clipboard
+    function copyTextToClipboard(elementId) {
+        var text = document.getElementById(elementId).textContent || document.getElementById(elementId).innerText;
+        navigator.clipboard.writeText(text).then(function() {
+            console.log("Text copied to clipboard");
+        })
+        .catch(function(err) {
+            console.error('Error in copying text: ', err);
+        });
+    }
+</script>
+
 {% endblock %}
