@@ -8,11 +8,15 @@ from fastapi.responses import (
 )
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
+
 from typing import Annotated
+
 from slowapi.errors import RateLimitExceeded
 from slowapi import Limiter, _rate_limit_exceeded_handler
+
 from slowapi.util import get_remote_address
 from sqlalchemy.orm import Session
+
 from starlette.templating import _TemplateResponse
 
 from .utils import generate_uuid, make_proper_url, check_link
@@ -38,8 +42,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-templates: Jinja2Templates = Jinja2Templates(
-    directory=str(Path(BASE_DIR, "templates")))
+templates: Jinja2Templates = Jinja2Templates(directory=str(Path(BASE_DIR, "templates")))
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -91,8 +94,7 @@ async def get_link(
 ) -> RedirectResponse:
     path: str = f"data/{uuid}"
     try:
-        link = db.query(LiberatedLink).filter(
-            LiberatedLink.uuid == uuid).first()
+        link = db.query(LiberatedLink).filter(LiberatedLink.uuid == uuid).first()
         return RedirectResponse(
             url=link.link, status_code=status.HTTP_301_MOVED_PERMANENTLY
         )
