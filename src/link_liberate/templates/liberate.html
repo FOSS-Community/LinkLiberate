@@ -20,8 +20,33 @@
     <div class="form-container">
         <form method="post" action="/liberate">
             <input type="text" name="content" class="link-input" placeholder="Enter your link...">
+            <div class="expiration-options">
+                <input type="checkbox" id="enable-expiration" name="enable-expiration" checked>
+                Enable link expiration
+                <div class="tooltip">🛈
+                    <span class="tooltiptext">The shortened link will stop working after some time.</span>
+                </div>
+                <select name="expiration-time">
+                    <option value="30">30 minutes</option>
+                    <option value="60">60 minutes</option>
+                    <option value="90">90 minutes</option>
+                </select>
+            </div>
             <button type="submit" class="submit-button">Shorten</button>
         </form>
     </div>
 </div>
+
+<script>
+    const tooltipIcon = document.querySelector('.tooltip-icon');
+    const hiddenTooltip = document.querySelector('.hidden-tooltip');
+
+    tooltipIcon.addEventListener('mouseenter', () => {
+        hiddenTooltip.classList.remove('hidden');
+    });
+
+    tooltipIcon.addEventListener('mouseleave', () => {
+        hiddenTooltip.classList.add('hidden');
+    });
+</script>
 {% endblock %}

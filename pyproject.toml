@@ -16,13 +16,14 @@ dependencies = [
     "SQLAlchemy>=2.0.25",
     "psycopg2-binary>=2.9.9",
     "validators>=0.22.0",
+    "aiosqlite>=0.19.0",
 ]
 requires-python = ">=3.11.6"
 readme = "README.md"
 license = {text = "MIT"}
 
 [tool.pdm.scripts]
-start = "uvicorn src.link_liberate.main:app --host 0.0.0.0 --port 8080 --workers 1 --reload"
+start = "uvicorn src.link_liberate.main:app --host 0.0.0.0 --port 8080 --workers 4 --reload"
 dev = "uvicorn src.link_liberate.main:app --host 0.0.0.0 --port 8080 --reload"
 test = "pytest"
 mypy = "mypy src/link_liberate"
