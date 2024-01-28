@@ -16,12 +16,12 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 
 from slowapi.util import get_remote_address
 from sqlalchemy.orm import Session
-
+from asyncio import create_task
 from starlette.templating import _TemplateResponse
 
 from .utils import generate_uuid, make_proper_url, check_link
 from .models import Base, LiberatedLink
-from .database import engine, get_db
+from .database import engine, get_db, expire_uuid
 
 limiter = Limiter(key_func=get_remote_address)
 app: FastAPI = FastAPI(title="link-liberate")
@@ -77,6 +77,7 @@ async def web_post(
         db.add(new_liberated_link)
         db.commit()
         db.refresh(new_liberated_link)
+        await create_task(expire_uuid(uuid))
         context = {"link": link, "short": f"{BASE_URL}/{uuid}"}
     except Exception as e:
         raise HTTPException(
