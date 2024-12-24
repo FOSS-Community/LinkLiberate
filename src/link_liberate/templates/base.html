@@ -23,7 +23,7 @@
         }
 
         a {
-          text-decoration: none !important;
+            text-decoration: none !important;
         }
 
         h1 {
@@ -59,44 +59,59 @@
         }
 
         .tooltip {
-          position: relative;
-          display: inline-block;
-          border-bottom: 1px dotted black;
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
         }
 
         .tooltip .tooltiptext {
-          visibility: hidden;
-          width: 120px;
-          background-color: #555;
-          color: #fff;
-          text-align: center;
-          padding: 5px 0;
-          border-radius: 6px;
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            border-radius: 6px;
 
-          position: absolute;
-          z-index: 1;
-          bottom: 125%;
-          left: 50%;
-          margin-left: -60px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
 
-          opacity: 0;
-          transition: opacity 0.3s;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .tooltip .tooltiptext::after {
-          content: "";
-          position: absolute;
-          top: 100%;
-          left: 50%;
-          margin-left: -5px;
-          border-width: 5px;
-          border-style: solid;
-          border-color: #555 transparent transparent transparent;
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
         }
 
         .tooltip:hover .tooltiptext {
-          visibility: visible;
-          opacity: 1;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .copy-button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .copy-button:hover {
+            background-color: #45a049;
         }
     </style>
     <title>
